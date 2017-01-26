@@ -24,16 +24,14 @@ void gotoxy(int x, int y)
 //data initialization
 void startup()
 {
-	high = 30;
-	width = 20;
-	position_y = high/2;
-	position_x = width/2;
-	
-	bullet_y = -2;
-	bullet_x = position_x;
-	
-	enemy_y = 0;
-	enemy_x = position_x;
+	high = 20;
+	width = 30;
+	position_x = high/2;
+	position_y = width/2;
+	bullet_x = -2;
+	bullet_y = position_y;
+	enemy_x = 0;
+	enemy_y = position_y;
 	score = 0;
 }
 
@@ -57,27 +55,27 @@ void show()
 		}
 		printf("\n");
 	}
-	printf("µÃ·Ö£º%d\n", score);
+	printf("score£º%d\n", score);
 }
 
 void updateWithoutInput()
 {
-	if(bullet_y > -1)
-		bullet_y--;
+	if(bullet_x > -1)
+		bullet_x--;
 	
 	//bullet hit the enemy
 	if((bullet_x==enemy_x) && (bullet_y==enemy_y))
 	{
 		score++;
-		enemy_y = -1;
-		enemy_x = rand()%width;
-		bullet_y = -2;
+		enemy_x = -1;
+		enemy_y = rand()%width;
+		bullet_x = -2;
 	}
 	//enemy fly over the window
-	if(enemy_y > high)
+	if(enemy_x > high)
 	{
-		enemy_y = -1;
-		enemy_x = rand()%width;
+		enemy_x = -1;
+		enemy_y = rand()%width;
 	}
 	
 	static int speed = 0;
@@ -85,7 +83,7 @@ void updateWithoutInput()
 		speed++;
 	if(speed == 20)
 	{
-		enemy_y++;
+		enemy_x++;
 		speed = 0;
 	}
 }
@@ -97,17 +95,17 @@ void updateWithInput()
 	{
 		input = getch();
 		if(input == 'a')
-			position_x--;
-		if(input == 'd')
-			position_x++;
-		if(input == 'w')
 			position_y--;
-		if(input == 's')
+		if(input == 'd')
 			position_y++;
+		if(input == 'w')
+			position_x--;
+		if(input == 's')
+			position_x++;
 		if(input == ' ')
 		{
-			bullet_y = position_y - 1;
-			bullet_x = position_x;
+			bullet_x = position_x - 1;
+			bullet_y = position_y;
 		}
 	}
 }
