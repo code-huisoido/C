@@ -55,7 +55,7 @@ void show()
 		}
 		printf("\n");
 	}
-	printf("score£º%d\n", score);
+	printf("score %d\n", score);
 }
 
 void updateWithoutInput()
